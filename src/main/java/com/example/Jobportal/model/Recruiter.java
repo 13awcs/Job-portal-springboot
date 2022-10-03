@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -22,16 +25,33 @@ public class Recruiter {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "name")
     private String name;
-    private Date dOb;
+
+    @Column(name = "dob")
+    private Date dob;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "phone")
     private String phone;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "avatar")
     private String avatar;
 
-    @ManyToOne()
-    @JsonManagedReference
-    @JoinColumn(name = "company_id")
-    private Company company;
+    @Column(name = "company_name")
+    private String companyName;
+
+    @Column(name = "username")
+    private String username;
+
+    @Column(name = "password")
+    private String password;
+
+
 
 }

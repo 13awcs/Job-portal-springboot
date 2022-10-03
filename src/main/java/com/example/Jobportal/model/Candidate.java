@@ -25,14 +25,14 @@ public class Candidate {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "c_name")
+    @Column(name = "name")
     private String name;
 
     @Column(name = "major")
     private String major;
 
-    @Column(name = "dOb")
-    private Date dOb;
+    @Column(name = "dob")
+    private Date dob;
 
     @Column(name = "phone")
     private String phone;

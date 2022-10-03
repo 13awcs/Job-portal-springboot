@@ -20,4 +20,6 @@ public class CompositeKey implements Serializable {
     @Column(name = "job_id")
     Long jobId;
 
+
+
 }

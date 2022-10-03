@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Setter
 @Getter
@@ -22,8 +25,8 @@ public class Job {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "category")
     private String category;
@@ -43,6 +46,9 @@ public class Job {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "category_name")
+    private String categoryName;
+
     @Column(name = "salary")
     private Float salary;
 
@@ -57,8 +63,9 @@ public class Job {
     @JoinColumn(name = "recruiter_id")
     private Recruiter recruiter;
 
-    @ManyToOne
+
+    @OneToMany(mappedBy = "jobApply",cascade = CascadeType.ALL)
     @JsonManagedReference
-    @JoinColumn(name = "company_id")
-    private Company company;
+    @Fetch(value = FetchMode.SUBSELECT)
+    private List<Apply> applies;
 }
