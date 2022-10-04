@@ -1,5 +1,6 @@
 package com.example.Jobportal.controller;
 
+import com.example.Jobportal.common.ResponseObject;
 import com.example.Jobportal.dto.LoginDto;
 import com.example.Jobportal.dto.RegisterDto;
 import com.example.Jobportal.model.Recruiter;
@@ -22,28 +23,28 @@ public class RecruiterController{
     RecruiterRepository recruiterRepository;
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterDto registerDto){
+    public ResponseEntity<ResponseObject> register(@RequestBody RegisterDto registerDto){
         if(recruiterRepository.existsByUsername(registerDto.getUsername())){
-            return new ResponseEntity<>("Username is already taken !", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Username is already taken !"));
         }
         if(recruiterRepository.existsByEmail(registerDto.getEmail())){
-            return new ResponseEntity<>("Email is already taken !", HttpStatus.BAD_REQUEST);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Email is already taken !"));
         }
         recruiterService.registerRecruiter(registerDto);
-        return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Register successfully !"));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
+    public ResponseEntity<ResponseObject> login(@RequestBody LoginDto loginDto) {
         List<Recruiter> recruiters = recruiterRepository.findAll();
         for (Recruiter recruiter : recruiters) {
             if (recruiter.getUsername().equalsIgnoreCase(loginDto.getUsername()) && recruiter.getPassword().equalsIgnoreCase(loginDto.getPassword())) {
-                recruiterService.loadRecruiterByUsername(loginDto.getUsername());
-                return new ResponseEntity<>("Login succsessfully !", HttpStatus.OK);
+                return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Login successfully !",
+                        recruiterService.loadRecruiterByUsername(loginDto.getUsername())));
             }
 
         }
-        return new ResponseEntity<>("Username or password is wrong !", HttpStatus.BAD_REQUEST);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Username or password is wrong !"));
 
     }
 

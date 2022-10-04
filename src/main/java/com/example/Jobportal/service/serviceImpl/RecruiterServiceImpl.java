@@ -30,16 +30,15 @@ public class RecruiterServiceImpl implements RecruiterService {
         recruiter.setUsername(registerDto.getUsername());
         recruiter.setEmail(registerDto.getEmail());
         recruiter.setUsername(registerDto.getUsername());
-        recruiter.setPassword(this.passwordEncoder.encode(registerDto.getPassword()));
+        //recruiter.setPassword(this.passwordEncoder.encode(registerDto.getPassword()));
+        recruiter.setPassword(registerDto.getPassword());
         return recruiterRepository.save(recruiter);
     }
 
     @Override
     public Recruiter loadRecruiterByUsername(String username) {
-        Recruiter recruiter = recruiterRepository.findByUsername(username).orElseThrow(()->
-                new UsernameNotFoundException("User not found with username : "+username));
-        return new Recruiter(recruiter.getId(),recruiter.getName(),recruiter.getDob(),recruiter.getAddress(),recruiter.getPhone(),recruiter.getEmail(),
-                recruiter.getAvatar(),recruiter.getCompanyName(),recruiter.getUsername(),recruiter.getPassword());
+        Recruiter recruiter = recruiterRepository.findByUsername(username);
+        return recruiter;
 //        Recruiter recruiter = recruiterRepository.
 
     }
