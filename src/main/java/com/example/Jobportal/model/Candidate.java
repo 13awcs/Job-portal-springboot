@@ -1,6 +1,7 @@
 package com.example.Jobportal.model;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.Fetch;
@@ -56,7 +57,7 @@ public class Candidate {
     private String gender;
 
     @OneToMany(mappedBy = "candidateApply",cascade = CascadeType.ALL)
-    @JsonManagedReference
+    @JsonBackReference
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Apply> applies;
 }

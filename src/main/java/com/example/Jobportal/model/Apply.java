@@ -11,7 +11,6 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@ToString
 @Table(name = "apply")
 public class Apply {
 
@@ -31,4 +30,13 @@ public class Apply {
     private Job jobApply;
 
     private String status;
+
+    @Override
+    public String toString() {
+        return "Apply{" +
+                "candidateApply=" + candidateApply +
+                ", jobApply=" + jobApply +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }
