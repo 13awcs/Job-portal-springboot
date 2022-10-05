@@ -44,7 +44,10 @@ public class Candidate {
     @Column(name = "address")
     private String address;
 
-    @Column(name = "c_level")
+    @Column(name = "category")
+    private String category;
+
+    @Column(name = "level")
     private String level;
 
     @Column(name = "avatar")

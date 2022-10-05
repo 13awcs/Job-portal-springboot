@@ -1,12 +1,10 @@
 package com.example.Jobportal.service.serviceImpl;
 
-import com.example.Jobportal.dto.LoginDto;
 import com.example.Jobportal.dto.RegisterDto;
 import com.example.Jobportal.model.Recruiter;
 import com.example.Jobportal.repository.RecruiterRepository;
 import com.example.Jobportal.service.RecruiterService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,5 +39,10 @@ public class RecruiterServiceImpl implements RecruiterService {
         return recruiter;
 //        Recruiter recruiter = recruiterRepository.
 
+    }
+
+    @Override
+    public Recruiter editProfile(Long id) {
+        return null;
     }
 }

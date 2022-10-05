@@ -7,6 +7,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class Job {
     private String level;
 
     @Column(name = "deadline")
-    private Date deadline;
+    private LocalDate deadline;
 
     @Column(name = "description")
     private String description;
@@ -56,6 +57,9 @@ public class Job {
 
     @Column(name = "status")
     private String status;
+
+    @Column(name = "create_at")
+    private LocalDate createAt;
 
     @ManyToOne
     @JsonManagedReference

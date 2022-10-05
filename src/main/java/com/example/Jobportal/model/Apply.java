@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -29,7 +30,11 @@ public class Apply {
     @JoinColumn(name = "job_id")
     private Job jobApply;
 
+    @Column(name = "status")
     private String status;
+
+    @Column(name = "apply_date")
+    private LocalDate applyDate;
 
     @Override
     public String toString() {

@@ -7,4 +7,5 @@ import com.example.Jobportal.model.Recruiter;
 public interface RecruiterService {
     Recruiter registerRecruiter(RegisterDto registerDto);
     Recruiter loadRecruiterByUsername(String username);
+    Recruiter editProfile(Long id);
 }
