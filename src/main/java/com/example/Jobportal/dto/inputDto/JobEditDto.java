@@ -1,18 +1,16 @@
 package com.example.Jobportal.dto.inputDto;
 
-import com.example.Jobportal.model.Recruiter;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDate;
-
 @Data
 @Setter
 @Getter
 @ToString
-public class JobInputDto {
+public class JobEditDto {
     private String title;
     private String category;
     private int amount;
@@ -25,6 +23,4 @@ public class JobInputDto {
     private String location;
     private String status;
     private LocalDate createAt;
-    private Long recruiterId;
-
 }

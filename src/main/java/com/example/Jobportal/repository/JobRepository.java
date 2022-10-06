@@ -1,5 +1,6 @@
 package com.example.Jobportal.repository;
 
+import com.example.Jobportal.dto.inputDto.JobEditDto;
 import com.example.Jobportal.dto.outputDto.JobOutputDto;
 import com.example.Jobportal.model.Job;
 import org.springframework.data.jpa.repository.JpaRepository;

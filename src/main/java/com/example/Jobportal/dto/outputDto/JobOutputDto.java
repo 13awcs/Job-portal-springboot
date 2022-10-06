@@ -12,8 +12,7 @@ import java.time.LocalDate;
 @Getter
 @ToString
 public class JobOutputDto {
-    private Long id;
-    private String name;
+    private String title;
     private String category;
     private int amount;
     private String type;
@@ -24,4 +23,5 @@ public class JobOutputDto {
     private Float salary;
     private String location;
     private String status;
+    private LocalDate createAt;
 }
