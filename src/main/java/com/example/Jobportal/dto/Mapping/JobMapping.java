@@ -5,6 +5,9 @@ import com.example.Jobportal.dto.inputDto.JobInputDto;
 import com.example.Jobportal.dto.outputDto.JobOutputDto;
 import com.example.Jobportal.model.Job;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class JobMapping {
 
     public static JobOutputDto jobInputToOutput(Job job){
@@ -24,6 +27,14 @@ public class JobMapping {
 
         return jobOutputDto;
 
+    }
+
+    public static List<JobOutputDto> toJobOutPutList(List<Job> jobs){
+        List<JobOutputDto> jobOutputDtos = new ArrayList<>();
+        for(Job job : jobs){
+            jobOutputDtos.add(jobInputToOutput(job));
+        }
+        return jobOutputDtos;
     }
 
     public static Job toJob(JobInputDto jobInputDto){

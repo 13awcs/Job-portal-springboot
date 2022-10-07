@@ -17,6 +17,12 @@ public class JobController {
     @Autowired
     JobService jobService;
 
+    @GetMapping("/jobs")
+    public ResponseEntity<ResponseObject> getAllJobs(){
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Create job successfully !",jobService.sortJobByDate()));
+
+    }
+
     @PostMapping("/jobs/create")
     public ResponseEntity<ResponseObject> createJob(@RequestBody JobInputDto jobInputDto){
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Create job successfully !",jobService.createJob(jobInputDto)));
@@ -29,7 +35,7 @@ public class JobController {
     }
 
     @DeleteMapping("/jobs/delete/{id}")
-    public ResponseEntity<ResponseObject> editJob(@PathVariable Long id){
+    public ResponseEntity<ResponseObject> deleteJob(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(jobService.deleteJob(id)));
     }
 

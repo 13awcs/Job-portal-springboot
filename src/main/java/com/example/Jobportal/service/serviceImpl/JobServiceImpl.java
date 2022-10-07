@@ -2,20 +2,19 @@ package com.example.Jobportal.service.serviceImpl;
 
 import com.example.Jobportal.common.exceptions.ResourceNotFoundException;
 import com.example.Jobportal.dto.Mapping.JobMapping;
-import com.example.Jobportal.dto.inputDto.JobEditDto;
 import com.example.Jobportal.dto.inputDto.JobInputDto;
 import com.example.Jobportal.dto.outputDto.JobOutputDto;
 import com.example.Jobportal.model.Job;
 import com.example.Jobportal.model.Recruiter;
+import com.example.Jobportal.repository.ApplyRepository;
 import com.example.Jobportal.repository.JobRepository;
 import com.example.Jobportal.repository.RecruiterRepository;
 import com.example.Jobportal.service.JobService;
-import org.hibernate.engine.spi.Mapping;
-import org.hibernate.event.spi.PreCollectionUpdateEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +26,9 @@ public class JobServiceImpl implements JobService {
 
     @Autowired
     RecruiterRepository recruiterRepository;
+
+    @Autowired
+    ApplyRepository applyRepository;
 
     @Override
     public Job createJob(JobInputDto jobInputDto) {
@@ -63,6 +65,20 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public List<JobOutputDto> sortJobByDate() {
-        return null;
+
+        List<JobOutputDto> jobOutputDtos = new ArrayList<>();
+
+        List<Job> jobs = jobRepository.sortJobsByDate();
+        if(jobs.isEmpty()){
+            new ResourceNotFoundException("No result !");
+        }
+        for(Job job : jobs){
+            int applyAmount = applyRepository.countApply(job.getId());
+            JobOutputDto jobOutputDto = JobMapping.jobInputToOutput(job);
+            jobOutputDto.setApplyAmount(applyAmount);
+            jobOutputDtos.add(jobOutputDto);
+        }
+
+        return jobOutputDtos;
     }
 }

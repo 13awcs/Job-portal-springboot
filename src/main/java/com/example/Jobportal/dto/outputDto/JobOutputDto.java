@@ -24,4 +24,5 @@ public class JobOutputDto {
     private String location;
     private String status;
     private LocalDate createAt;
+    private int applyAmount;
 }
