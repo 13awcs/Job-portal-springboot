@@ -2,7 +2,6 @@ package com.example.Jobportal.controller;
 
 
 import com.example.Jobportal.common.ResponseObject;
-import com.example.Jobportal.model.Apply;
 import com.example.Jobportal.model.Candidate;
 import com.example.Jobportal.repository.CandidateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,8 @@ public class CandidateController {
     CandidateRepository candidateRepository;
 
     @GetMapping("/candidates")
-    public ResponseEntity<ResponseObject> getAllCandidate(){
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(candidateRepository.findAll()));
+    public List<Candidate> getAllCandidate(){
+        return candidateRepository.findAll();
     }
 
     @GetMapping("/candidates/search")

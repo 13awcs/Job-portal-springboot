@@ -1,6 +1,5 @@
 package com.example.Jobportal.dto.inputDto;
 
-import com.example.Jobportal.model.Recruiter;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;

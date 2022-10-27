@@ -7,6 +7,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Recruiter {
     private String name;
 
     @Column(name = "dob")
-    private Date dob;
+    private LocalDate dob;
 
     @Column(name = "address")
     private String address;

@@ -2,24 +2,27 @@ package com.example.Jobportal.controller;
 
 
 import com.example.Jobportal.common.ResponseObject;
-import com.example.Jobportal.dto.inputDto.JobEditDto;
 import com.example.Jobportal.dto.inputDto.JobInputDto;
+import com.example.Jobportal.dto.outputDto.JobOutputDto;
 import com.example.Jobportal.model.Job;
 import com.example.Jobportal.service.JobService;
+import com.example.Jobportal.service.serviceImpl.JobServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
-public class JobController {
+public class JobController{
 
     @Autowired
     JobService jobService;
 
     @GetMapping("/jobs")
-    public ResponseEntity<ResponseObject> getAllJobs(){
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Create job successfully !",jobService.sortJobByDate()));
+    public List<JobOutputDto> getAllJobs(){
+        return jobService.sortJobByDate();
 
     }
 
