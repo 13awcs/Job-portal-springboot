@@ -20,6 +20,11 @@ public class JobController{
     @Autowired
     JobService jobService;
 
+//    @GetMapping("/jobs")
+//    public ResponseEntity<List<JobOutputDto>> getAllJobs(){
+//        return ResponseEntity.status(HttpStatus.OK).body(jobService.sortJobByDate());
+//
+//    }
     @GetMapping("/jobs")
     public List<JobOutputDto> getAllJobs(){
         return jobService.sortJobByDate();

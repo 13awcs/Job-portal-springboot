@@ -25,11 +25,12 @@ public class CandidateController {
     }
 
     @GetMapping("/candidates/search")
-    public ResponseEntity<ResponseObject> searchCandidate(@RequestParam String keyword){
-        List<Candidate> candidates = candidateRepository.searchCandidate(keyword);
-        if(candidates.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("No result found"));
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(candidates));
+    public ResponseEntity<List<Candidate>> searchCandidate(@RequestParam String keyword){
+        //List<Candidate> candidates = candidateRepository.searchCandidate(keyword);
+        return ResponseEntity.status(HttpStatus.OK).body(candidateRepository.searchCandidate(keyword));
+//        if(candidates.isEmpty()){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseObject("No result found"));
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject(candidates));
     }
 }

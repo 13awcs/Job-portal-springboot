@@ -48,4 +48,9 @@ public class RecruiterController{
 
     }
 
+    @GetMapping("/profile")
+    public ResponseEntity<Recruiter> getProfile(@RequestParam String username){
+        return ResponseEntity.status(HttpStatus.OK).body(recruiterService.loadRecruiterByUsername(username));
+    }
+
 }

@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate,Long> {
 
-    @Query(value = "select * from candidate c where c.name like %:keyword% or c.category like %:keyword% or c.level like %:keyword%",nativeQuery = true)
+    @Query(value = "select * from candidate c where c.name like %:keyword% or c.category like %:keyword% or c.address like %:keyword%",nativeQuery = true)
     List<Candidate> searchCandidate(String keyword);
 
 }
