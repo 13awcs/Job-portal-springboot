@@ -1,5 +1,7 @@
 package com.example.joblist.entities
 
+import java.io.Serializable
+
 data class Job(
     val id: Long = 0,
     val amount: Int = 0,
@@ -16,4 +18,4 @@ data class Job(
     val title: String,
     val type: String = "",
     val recruiterId: Long,
-)
+) : Serializable

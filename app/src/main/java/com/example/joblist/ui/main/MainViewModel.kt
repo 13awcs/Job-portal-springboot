@@ -41,8 +41,14 @@ class MainViewModel : ViewModel() {
     private val _candidatesState = MutableStateFlow<Resource<List<Candidate>>>(Resource.Loading(false))
     val candidatesState = _candidatesState.asStateFlow()
 
+    private val _candidateState = MutableStateFlow<Resource<Candidate>>(Resource.Loading(false))
+    val candidateState = _candidateState.asStateFlow()
+
     private val _jobsState = MutableStateFlow<Resource<List<com.example.joblist.entities.Job>>>(Resource.Loading(false))
     val jobsState = _jobsState.asStateFlow()
+
+    private val _jobState = MutableStateFlow<Resource<com.example.joblist.entities.Job>>(Resource.Loading(false))
+    val jobState = _jobState.asStateFlow()
 
     private val _createJobState = MutableStateFlow<Resource<CreatedJobResponse>>(Resource.Loading(false))
     val createJobState = _createJobState.asStateFlow()
@@ -97,6 +103,28 @@ class MainViewModel : ViewModel() {
         }
     }
 
+    fun getCandidateById(id: Long) {
+        job = viewModelScope.launch(coroutineExceptionHandler) {
+            _candidateState.emit(Resource.Loading(true))
+
+            withContext(Dispatchers.IO) {
+                val response = appService.getCandidateById(id).awaitResponse()
+                _candidateState.emit(
+                    if (response.isSuccessful) Resource.Success(
+                        response.body(), response.message()
+                    )
+                    else Resource.Error(response.errorBody().toString())
+                )
+            }
+        }.apply {
+            invokeOnCompletion {
+                viewModelScope.launch {
+                    _candidateState.emit(Resource.Loading(false))
+                }
+            }
+        }
+    }
+
     fun getAllJobs() {
         job = viewModelScope.launch(coroutineExceptionHandler) {
             _jobsState.emit(Resource.Loading(true))
@@ -114,6 +142,28 @@ class MainViewModel : ViewModel() {
             invokeOnCompletion {
                 viewModelScope.launch {
                     _jobsState.emit(Resource.Loading(false))
+                }
+            }
+        }
+    }
+
+    fun getJobById(id: Long) {
+        job = viewModelScope.launch(coroutineExceptionHandler) {
+            _jobState.emit(Resource.Loading(true))
+
+            withContext(Dispatchers.IO) {
+                val response = appService.getJobById(id).awaitResponse()
+                _jobState.emit(
+                    if (response.isSuccessful) Resource.Success(
+                        response.body(), response.message()
+                    )
+                    else Resource.Error(response.errorBody().toString())
+                )
+            }
+        }.apply {
+            invokeOnCompletion {
+                viewModelScope.launch {
+                    _jobState.emit(Resource.Loading(false))
                 }
             }
         }

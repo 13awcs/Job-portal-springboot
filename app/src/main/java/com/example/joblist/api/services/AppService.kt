@@ -17,11 +17,17 @@ interface  AppService {
     @GET("/candidates")
     fun getAllCandidate(): Call<List<Candidate>>
 
+    @GET("/candidate/1/")
+    fun getCandidateById(@Query("id") id: Long): Call<Candidate>
+
 //    @GET("/candidates/search")
 //    fun searchCandidate(@Query("keyword") keyword: String?): Call<List<Candidate?>?>?
 
     @GET("/jobs")
     fun getAllJobs(): Call<List<Job>>
+
+    @GET("/jobs/{id}")
+    fun getJobById(@Path("id") id: Long): Call<Job?>
 
     @POST("/jobs/create")
     fun createJobs(@Body job: Job): Call<CreatedJobResponse>

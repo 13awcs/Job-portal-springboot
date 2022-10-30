@@ -5,4 +5,6 @@ object Constants {
     const val SHARED_PREFS = "sharedPrefs"
     const val KEY_USERNAME = "username"
     const val KEY_UID = "uid"
+    const val EXTRAS_CANDIDATE = "candidate"
+    const val EXTRAS_JOB = "job"
 }

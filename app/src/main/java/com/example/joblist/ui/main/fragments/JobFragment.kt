@@ -2,6 +2,7 @@ package com.example.joblist.ui.main.fragments
 
 import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -18,6 +19,7 @@ import com.example.joblist.base.BaseFragment
 import com.example.joblist.databinding.FragmentJobBinding
 import com.example.joblist.databinding.LayoutCreateJobDialogBinding
 import com.example.joblist.entities.Job
+import com.example.joblist.ui.job.JobDetailsActivity
 import com.example.joblist.ui.main.MainViewModel
 import com.example.joblist.ui.main.adapters.JobAdapter
 import com.example.joblist.utils.Constants
@@ -100,6 +102,24 @@ class JobFragment : BaseFragment() {
                     }
                 }
                 launch {
+                    activityViewModel.jobState.collect {
+                        when (it) {
+                            is Resource.Loading -> {
+                                if (it.isLoading) pd.show() else pd.hide()
+                            }
+                            is Resource.Success -> {
+                                it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
+                                startActivity(Intent(requireContext(), JobDetailsActivity::class.java).apply {
+                                    putExtra(Constants.EXTRAS_JOB, it.data)
+                                })
+                            }
+                            is Resource.Error -> {
+                                it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
+                            }
+                        }
+                    }
+                }
+                launch {
                     activityViewModel.createJobState.collect {
                         when (it) {
                             is Resource.Loading -> {
@@ -164,6 +184,7 @@ class JobFragment : BaseFragment() {
 
         jobAdapter.listener = object : JobAdapter.Listener {
             override fun onClick(position: Int) {
+                activityViewModel.getJobById(jobAdapter.currentList[position].id)
             }
 
             override fun onRightSwipe(position: Int) {

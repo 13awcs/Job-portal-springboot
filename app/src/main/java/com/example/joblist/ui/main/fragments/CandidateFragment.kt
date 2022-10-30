@@ -1,6 +1,7 @@
 package com.example.joblist.ui.main.fragments
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,8 +14,10 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 import com.example.joblist.base.BaseFragment
 import com.example.joblist.databinding.FragmentCandidateBinding
+import com.example.joblist.ui.candidate.CandidateDetailsActivity
 import com.example.joblist.ui.main.MainViewModel
 import com.example.joblist.ui.main.adapters.CandidateAdapter
+import com.example.joblist.utils.Constants
 import com.example.joblist.utils.Resource
 import kotlinx.coroutines.launch
 
@@ -75,6 +78,24 @@ class CandidateFragment : BaseFragment() {
                         }
                     }
                 }
+                launch {
+                    activityViewModel.candidateState.collect {
+                        when (it) {
+                            is Resource.Loading -> {
+                                if (it.isLoading) pd.show() else pd.hide()
+                            }
+                            is Resource.Success -> {
+                                it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
+                                startActivity(Intent(requireContext(), CandidateDetailsActivity::class.java).apply {
+                                    putExtra(Constants.EXTRAS_CANDIDATE, it.data)
+                                })
+                            }
+                            is Resource.Error -> {
+                                it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -82,7 +103,7 @@ class CandidateFragment : BaseFragment() {
     private fun setListener() {
         candidateAdapter.listener = object : CandidateAdapter.Listener {
             override fun onClick(position: Int) {
-
+                activityViewModel.getCandidateById(candidateAdapter.currentList[position].id)
             }
         }
     }
