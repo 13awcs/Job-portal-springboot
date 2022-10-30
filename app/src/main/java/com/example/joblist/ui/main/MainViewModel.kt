@@ -125,12 +125,12 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun getAllJobs() {
+    fun getAllJobs(recruiterId: Long) {
         job = viewModelScope.launch(coroutineExceptionHandler) {
             _jobsState.emit(Resource.Loading(true))
 
             withContext(Dispatchers.IO) {
-                val response = appService.getAllJobs().awaitResponse()
+                val response = appService.getAllJobs(recruiterId).awaitResponse()
                 _jobsState.emit(
                     if (response.isSuccessful) Resource.Success(
                         response.body(), response.message()

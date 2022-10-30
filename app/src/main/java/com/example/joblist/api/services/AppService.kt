@@ -23,8 +23,8 @@ interface  AppService {
 //    @GET("/candidates/search")
 //    fun searchCandidate(@Query("keyword") keyword: String?): Call<List<Candidate?>?>?
 
-    @GET("/jobs")
-    fun getAllJobs(): Call<List<Job>>
+    @GET("/jobs/recruiter/{id}")
+    fun getAllJobs(@Path("id") recruiterId: Long): Call<List<Job>>
 
     @GET("/jobs/{id}")
     fun getJobById(@Path("id") id: Long): Call<Job?>

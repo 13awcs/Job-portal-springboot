@@ -74,12 +74,19 @@ class JobFragment : BaseFragment() {
         jobAdapter = JobAdapter().apply {
             binding.rvJobs.adapter = this
             binding.rvJobs.setHasFixedSize(true)
-            binding.rvJobs.addItemDecoration(DividerItemDecoration(
-                requireContext(),
-                RecyclerView.VERTICAL,
-            ))
+            binding.rvJobs.addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    RecyclerView.VERTICAL,
+                )
+            )
         }
-        activityViewModel.getAllJobs()
+        activityViewModel.getAllJobs(
+            SharedPreferencesUtils.loadString(
+                requireContext(),
+                Constants.KEY_UID
+            ).toLong()
+        )
     }
 
     private fun setObserver() {
@@ -109,9 +116,13 @@ class JobFragment : BaseFragment() {
                             }
                             is Resource.Success -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
-                                startActivity(Intent(requireContext(), JobDetailsActivity::class.java).apply {
-                                    putExtra(Constants.EXTRAS_JOB, it.data)
-                                })
+                                startActivity(
+                                    Intent(
+                                        requireContext(),
+                                        JobDetailsActivity::class.java
+                                    ).apply {
+                                        putExtra(Constants.EXTRAS_JOB, it.data)
+                                    })
                             }
                             is Resource.Error -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
@@ -127,7 +138,11 @@ class JobFragment : BaseFragment() {
                             }
                             is Resource.Success -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
-                                activityViewModel.getAllJobs()
+                                activityViewModel.getAllJobs(
+                                    SharedPreferencesUtils.loadString(
+                                        requireContext(),
+                                        Constants.KEY_UID
+                                    ).toLong())
                             }
                             is Resource.Error -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
@@ -143,7 +158,11 @@ class JobFragment : BaseFragment() {
                             }
                             is Resource.Success -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
-                                activityViewModel.getAllJobs()
+                                activityViewModel.getAllJobs(
+                                    SharedPreferencesUtils.loadString(
+                                        requireContext(),
+                                        Constants.KEY_UID
+                                    ).toLong())
                             }
                             is Resource.Error -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
@@ -159,7 +178,11 @@ class JobFragment : BaseFragment() {
                             }
                             is Resource.Success -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
-                                activityViewModel.getAllJobs()
+                                activityViewModel.getAllJobs(
+                                    SharedPreferencesUtils.loadString(
+                                        requireContext(),
+                                        Constants.KEY_UID
+                                    ).toLong())
                             }
                             is Resource.Error -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
