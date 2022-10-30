@@ -26,9 +26,9 @@ interface  AppService {
     @POST("/jobs/create")
     fun createJobs(@Body job: Job): Call<CreatedJobResponse>
 
-    @POST("/jobs/edit/{id}")
+    @PUT("/jobs/edit/{id}")
     fun editJobs(@Path("id") id: Long, @Body newJob: Job): Call<EditedJobResponse>
 
-    @POST("/jobs/delete/{id}")
+    @DELETE("/jobs/delete/{id}")
     fun deleteJobs(@Path("id") id: Long): Call<EditedJobResponse>
 }

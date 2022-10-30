@@ -101,6 +101,7 @@ class JobFragment : BaseFragment() {
                             }
                             is Resource.Success -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
+                                activityViewModel.getAllJobs()
                             }
                             is Resource.Error -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
@@ -116,6 +117,7 @@ class JobFragment : BaseFragment() {
                             }
                             is Resource.Success -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
+                                activityViewModel.getAllJobs()
                             }
                             is Resource.Error -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
@@ -131,6 +133,7 @@ class JobFragment : BaseFragment() {
                             }
                             is Resource.Success -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
+                                activityViewModel.getAllJobs()
                             }
                             is Resource.Error -> {
                                 it.message?.let { msg -> if (msg.isNotEmpty()) toast(msg) }
@@ -144,17 +147,13 @@ class JobFragment : BaseFragment() {
 
     private fun setListener() {
         bindingDialog.btCancel.setOnClickListener {
-            dialog.dismiss()
+            clearDialog()
+            jobAdapter.notifyDataSetChanged()
         }
 
         bindingDialog.btOK.setOnClickListener {
-            if (bindingDialog.tvId.text.isNotEmpty()) {
-                modifyJob(false)
-            } else {
-                modifyJob(true)
-            }
-            dialog.dismiss()
-            activityViewModel.getAllJobs()
+            modifyJob(bindingDialog.tvId.text.isNullOrEmpty())
+            clearDialog()
         }
 
         jobAdapter.listener = object : JobAdapter.Listener {
@@ -162,19 +161,40 @@ class JobFragment : BaseFragment() {
             }
 
             override fun onRightSwipe(position: Int) {
-                val existingJob = jobAdapter.currentList[position]
-                bindingDialog.tvId.text = existingJob.id.toString()
-                bindingDialog.etTitle.setText(existingJob.title)
-                bindingDialog.etLevel.setText(existingJob.level)
-                bindingDialog.etAddress.setText(existingJob.location)
-                bindingDialog.etSalary.setText(existingJob.salary.toString())
+                with(jobAdapter.currentList[position]) {
+                    bindingDialog.tvId.text = id.toString()
+                    bindingDialog.etTitle.setText(title)
+                    bindingDialog.etLevel.setText(level)
+                    bindingDialog.etAddress.setText(location)
+                    bindingDialog.etSalary.setText(salary.toString())
+                }
                 dialog.show()
             }
 
             override fun onLeftSwipe(position: Int) {
-                activityViewModel.deleteJob(jobAdapter.currentList[position].id)
+                AlertDialog.Builder(requireContext())
+                    .setTitle("Delete this item?")
+                    .setPositiveButton("Yes") { dialog, _ ->
+                        activityViewModel.deleteJob(jobAdapter.currentList[position].id)
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("No") { dialog, _ ->
+                        jobAdapter.notifyItemChanged(position)
+                        dialog.dismiss()
+                    }
+                    .create().show()
             }
         }
+    }
+
+    private fun clearDialog() {
+        bindingDialog.tvId.text = ""
+        bindingDialog.etTitle.setText("")
+        bindingDialog.etLevel.setText("")
+        bindingDialog.etAddress.setText("")
+        bindingDialog.etSalary.setText("")
+
+        dialog.dismiss()
     }
 
     private fun modifyJob(isNew: Boolean) {
