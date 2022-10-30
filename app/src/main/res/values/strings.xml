@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">JobList</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="candidates">Candidates</string>
+    <string name="jobs">Jobs</string>
+    <string name="profile">Profile</string>
+    <string name="register">Register</string>
+    <string name="opening">Let\'s join us and \nBuild your relationship with others</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="username">Username</string>
+    <string name="login">Login</string>
+    <string name="back_to_login">Back to <u>Login</u></string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="register_link"><u>Register</u></string>
+    <string name="company_name">Company name</string>
+    <string name="phone">Phone</string>
+    <string name="name">Name</string>
+    <string name="search">Search</string>
+    <string name="logout">Logout</string>
+    <string name="create_new_job">Create new job</string>
+    <string name="title">Title</string>
+    <string name="level">Level</string>
+    <string name="salary">Salary</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="address">Address</string>
+</resources>

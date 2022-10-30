@@ -1,0 +1,8 @@
+package com.example.joblist.utils
+
+object Constants {
+    const val BASE_URL = "http://10.0.2.2:8080/"
+    const val SHARED_PREFS = "sharedPrefs"
+    const val KEY_USERNAME = "username"
+    const val KEY_UID = "uid"
+}
