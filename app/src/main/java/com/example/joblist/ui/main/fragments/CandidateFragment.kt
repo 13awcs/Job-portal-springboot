@@ -9,6 +9,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.example.joblist.base.BaseFragment
 import com.example.joblist.databinding.FragmentCandidateBinding
 import com.example.joblist.ui.main.MainViewModel
@@ -46,6 +48,10 @@ class CandidateFragment : BaseFragment() {
         candidateAdapter = CandidateAdapter().apply {
             binding.rvCandidates.adapter = this
             binding.rvCandidates.setHasFixedSize(true)
+            binding.rvCandidates.addItemDecoration(DividerItemDecoration(
+                requireContext(),
+                RecyclerView.VERTICAL,
+            ))
         }
         activityViewModel.getAllCandidates()
     }

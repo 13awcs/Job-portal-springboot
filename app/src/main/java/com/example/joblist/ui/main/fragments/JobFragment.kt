@@ -11,6 +11,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 import com.example.joblist.R
 import com.example.joblist.base.BaseFragment
 import com.example.joblist.databinding.FragmentJobBinding
@@ -70,6 +72,10 @@ class JobFragment : BaseFragment() {
         jobAdapter = JobAdapter().apply {
             binding.rvJobs.adapter = this
             binding.rvJobs.setHasFixedSize(true)
+            binding.rvJobs.addItemDecoration(DividerItemDecoration(
+                requireContext(),
+                RecyclerView.VERTICAL,
+            ))
         }
         activityViewModel.getAllJobs()
     }
