@@ -9,6 +9,7 @@ import com.example.joblist.entities.Candidate
 import com.example.joblist.entities.CreatedJobResponse
 import com.example.joblist.entities.EditedJobResponse
 import com.example.joblist.entities.User
+import com.example.joblist.entities.apply.ApplyResponse
 import com.example.joblist.utils.Resource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,6 +36,9 @@ class MainViewModel : ViewModel() {
             }
         }
 
+    private val _applyState = MutableStateFlow<Resource<ApplyResponse>>(Resource.Loading(false))
+    val applyState = _applyState.asStateFlow()
+
     private val _profileState = MutableStateFlow<Resource<User>>(Resource.Loading(false))
     val profileState = _profileState.asStateFlow()
 
@@ -58,6 +62,28 @@ class MainViewModel : ViewModel() {
 
     private val _deleteJobState = MutableStateFlow<Resource<EditedJobResponse>>(Resource.Loading(false))
     val deleteJobState = _deleteJobState.asStateFlow()
+
+    fun getAllApplies() {
+        job = viewModelScope.launch(coroutineExceptionHandler) {
+            _applyState.emit(Resource.Loading(true))
+
+            withContext(Dispatchers.IO) {
+                val response = appService.getAllApplies().awaitResponse()
+                _applyState.emit(
+                    if (response.isSuccessful) Resource.Success(
+                        response.body(), response.message()
+                    )
+                    else Resource.Error(response.errorBody().toString())
+                )
+            }
+        }.apply {
+            invokeOnCompletion {
+                viewModelScope.launch {
+                    _applyState.emit(Resource.Loading(false))
+                }
+            }
+        }
+    }
 
     fun getProfile(username: String) {
         job = viewModelScope.launch(coroutineExceptionHandler) {

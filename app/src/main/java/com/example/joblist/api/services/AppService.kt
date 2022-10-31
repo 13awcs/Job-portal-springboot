@@ -1,10 +1,14 @@
 package com.example.joblist.api.services
 
 import com.example.joblist.entities.*
+import com.example.joblist.entities.apply.ApplyResponse
 import retrofit2.Call
 import retrofit2.http.*
 
 interface  AppService {
+    @GET("/applies/newest")
+    fun getAllApplies(): Call<ApplyResponse>
+
     @POST("/login")
     fun login(@Body login: Login): Call<UserResponse>
 

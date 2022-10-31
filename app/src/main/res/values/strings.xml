@@ -27,4 +27,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="address">Address</string>
+    <string name="rejected">Rejected</string>
+    <string name="accepted">Accepted</string>
+    <string name="recent_applies">Recent applies</string>
 </resources>
