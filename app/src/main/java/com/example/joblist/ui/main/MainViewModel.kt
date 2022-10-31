@@ -42,6 +42,9 @@ class MainViewModel : ViewModel() {
     private val _profileState = MutableStateFlow<Resource<User>>(Resource.Loading(false))
     val profileState = _profileState.asStateFlow()
 
+    private val _editProfileState = MutableStateFlow<Resource<User>>(Resource.Loading(false))
+    val editProfileState = _editProfileState.asStateFlow()
+
     private val _candidatesState = MutableStateFlow<Resource<List<Candidate>>>(Resource.Loading(false))
     val candidatesState = _candidatesState.asStateFlow()
 
@@ -102,6 +105,28 @@ class MainViewModel : ViewModel() {
             invokeOnCompletion {
                 viewModelScope.launch {
                     _profileState.emit(Resource.Loading(false))
+                }
+            }
+        }
+    }
+
+    fun editProfile(id: Long, newUser: User) {
+        job = viewModelScope.launch(coroutineExceptionHandler) {
+            _editProfileState.emit(Resource.Loading(true))
+
+            withContext(Dispatchers.IO) {
+                val response = appService.editProfile(id, newUser).awaitResponse()
+                _editProfileState.emit(
+                    if (response.isSuccessful) Resource.Success(
+                        response.body(), response.message()
+                    )
+                    else Resource.Error(response.errorBody().toString())
+                )
+            }
+        }.apply {
+            invokeOnCompletion {
+                viewModelScope.launch {
+                    _editProfileState.emit(Resource.Loading(false))
                 }
             }
         }

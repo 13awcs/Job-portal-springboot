@@ -39,7 +39,7 @@ class ApplyAdapter : ListAdapter<Apply, RecyclerView.ViewHolder>(DiffCallback())
             binding.tvJobName.text = apply.jobApply.title
             binding.tvSalary.text = apply.jobApply.salary.toString()
             binding.tvAddress.text = apply.jobApply.location
-            binding.tvCandidateName.text = apply.candidateApply.name
+            binding.tvCandidateName.text = "Applied by ${apply.candidateApply.name}"
             itemView.setOnClickListener {
                 listener?.onClick(adapterPosition)
             }

@@ -18,6 +18,9 @@ interface  AppService {
     @GET("/profile")
     fun getProfile(@Query("username") username: String): Call<User>
 
+    @POST("/profile/edit")
+    fun editProfile(@Query("id") id: Long, @Body newUser: User): Call<User>
+
     @GET("/candidates")
     fun getAllCandidate(): Call<List<Candidate>>
 
