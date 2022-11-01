@@ -12,6 +12,7 @@ public class JobMapping {
 
     public static JobOutputDto jobInputToOutput(Job job){
         JobOutputDto jobOutputDto = new JobOutputDto();
+        jobOutputDto.setId(job.getId());
         jobOutputDto.setTitle(job.getTitle());
         jobOutputDto.setCategory(job.getCategory());
         jobOutputDto.setAmount(job.getAmount());

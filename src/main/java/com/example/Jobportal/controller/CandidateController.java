@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CandidateController {
@@ -22,6 +24,11 @@ public class CandidateController {
     @GetMapping("/candidates")
     public List<Candidate> getAllCandidate(){
         return candidateRepository.findAll();
+    }
+
+    @GetMapping("/candidate/{id}")
+    public Optional<Candidate> getCandidateById(@RequestParam Long id){
+        return candidateRepository.findById(id);
     }
 
     @GetMapping("/candidates/search")

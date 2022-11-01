@@ -7,10 +7,10 @@ values ('huy','cntt','2000-06-06','012312321','ahuy@gmail.com','HN','fresher','f
 insert into recruiter(name,dob,address,phone,email,avatar,company_name,username,password)
 values ('Tran Vuong Bac','1999-06-02','HN','2342342342','bac@gmail.com','https://recmiennam.com/wp-content/uploads/2018/03/hinh-anh-su-tu-1.jpg','Hybrid','bac','123a');
 
-insert into job(title,category,amount,type,level,deadline,description,company_name,salary,location,status,create_at)
-values ('java BE','BE',3,'fulltime','senior','2022-10-10','ada','hybrid',123000,'Hanoi','available','2022-10-05');
-insert into job(title,category,amount,type,level,deadline,description,company_name,salary,location,status,create_at)
-values ('Android dev','Android',3,'fulltime','senior','2022-10-10','ada','hybrid',123000,'Hanoi','available','2022-10-01');
+insert into job(title,category,amount,type,level,deadline,description,company_name,salary,location,status,create_at,recruiter_id)
+values ('java BE','BE',3,'fulltime','senior','2022-10-10','ada','hybrid',123000,'Hanoi','available','2022-10-05',1);
+insert into job(title,category,amount,type,level,deadline,description,company_name,salary,location,status,create_at,recruiter_id)
+values ('Android dev','Android',3,'fulltime','senior','2022-10-10','ada','hybrid',123000,'Hanoi','available','2022-10-01',1);
 
 insert into apply(candidate_id,job_id,status,apply_date)
 values (1,1,'accepted','2022-10-05');

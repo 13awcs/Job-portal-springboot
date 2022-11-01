@@ -1,6 +1,7 @@
 package com.example.Jobportal.service.serviceImpl;
 
 import com.example.Jobportal.dto.RegisterDto;
+import com.example.Jobportal.dto.inputDto.RecruiterInput;
 import com.example.Jobportal.model.Recruiter;
 import com.example.Jobportal.repository.RecruiterRepository;
 import com.example.Jobportal.service.RecruiterService;
@@ -42,7 +43,13 @@ public class RecruiterServiceImpl implements RecruiterService {
     }
 
     @Override
-    public Recruiter editProfile(Long id) {
-        return null;
+    public Recruiter editProfile(Long id, RecruiterInput recruiterInput) {
+        Recruiter recruiter = new Recruiter();
+        recruiter.setAvatar(recruiterInput.getAvatar());
+        recruiter.setEmail(recruiterInput.getEmail());
+        recruiter.setPhone(recruiterInput.getPhone());
+        recruiter.setCompanyName(recruiterInput.getCompanyName());
+        recruiter.setId(id);
+        return recruiterRepository.save(recruiter);
     }
 }

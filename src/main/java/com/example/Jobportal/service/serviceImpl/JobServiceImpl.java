@@ -64,21 +64,23 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<JobOutputDto> sortJobByDate() {
+    public List<Job> sortJobByDate(Long id) {
 
         List<JobOutputDto> jobOutputDtos = new ArrayList<>();
 
-        List<Job> jobs = jobRepository.sortJobsByDate();
+        List<Job> jobs = jobRepository.sortJobsByDate(id);
         if(jobs.isEmpty()){
             new ResourceNotFoundException("No result !");
         }
-        for(Job job : jobs){
-            int applyAmount = applyRepository.countApply(job.getId());
-            JobOutputDto jobOutputDto = JobMapping.jobInputToOutput(job);
-            jobOutputDto.setApplyAmount(applyAmount);
-            jobOutputDtos.add(jobOutputDto);
-        }
+//?  jobOutputDtos.add(jobOutputDto);
+//        }
+        //cai cho nay ti bro command Z lai nhe
 
-        return jobOutputDtos;
+        return jobs;
+    }
+
+    @Override
+    public Optional<Job> getDetailJob(Long id) {
+        return jobRepository.findById(id);
     }
 }

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Getter
 @ToString
 public class JobOutputDto {
+    private Long id;
     private String title;
     private String category;
     private int amount;
