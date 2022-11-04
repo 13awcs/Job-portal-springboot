@@ -69,7 +69,6 @@ class MainViewModel : ViewModel() {
     fun getAllApplies() {
         job = viewModelScope.launch(coroutineExceptionHandler) {
             _applyState.emit(Resource.Loading(true))
-
             withContext(Dispatchers.IO) {
                 val response = appService.getAllApplies().awaitResponse()
                 _applyState.emit(

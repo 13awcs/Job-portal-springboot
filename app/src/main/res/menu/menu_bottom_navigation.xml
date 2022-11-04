@@ -14,7 +14,6 @@
         android:id="@+id/navigation_job"
         android:icon="@drawable/ic_baseline_post_add_24"
         android:title="@string/jobs" />
-
     <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_baseline_person_24"
