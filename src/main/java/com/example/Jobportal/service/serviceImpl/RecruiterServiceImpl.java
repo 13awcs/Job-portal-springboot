@@ -28,7 +28,6 @@ public class RecruiterServiceImpl implements RecruiterService {
         Recruiter recruiter = new Recruiter();
         recruiter.setUsername(registerDto.getUsername());
         recruiter.setEmail(registerDto.getEmail());
-        recruiter.setUsername(registerDto.getUsername());
         //recruiter.setPassword(this.passwordEncoder.encode(registerDto.getPassword()));
         recruiter.setPassword(registerDto.getPassword());
         return recruiterRepository.save(recruiter);

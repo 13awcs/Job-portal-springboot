@@ -17,7 +17,6 @@ public interface ApplyRepository extends JpaRepository<Apply, CompositeKey> {
     @Query(value = "select * from apply p order by p.apply_date DESC ",nativeQuery = true)
     List<Apply> getNewestApply();
 
-
     @Query(value = "select * from apply p where p.status like :status", nativeQuery = true)
     List<Apply> searchApplyByStatus(String status);
 }

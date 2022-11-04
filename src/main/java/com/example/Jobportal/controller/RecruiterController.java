@@ -27,7 +27,7 @@ public class RecruiterController{
     public ResponseEntity<ResponseObject> register(@RequestBody RegisterDto registerDto){
         if(recruiterRepository.existsByUsername(registerDto.getUsername())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Username is already taken !"));
-        }
+        }else
         if(recruiterRepository.existsByEmail(registerDto.getEmail())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Email is already taken !"));
         }
