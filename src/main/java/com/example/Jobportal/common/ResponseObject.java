@@ -7,7 +7,6 @@ import lombok.ToString;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
 public class ResponseObject {
     private String message;
@@ -21,4 +20,8 @@ public class ResponseObject {
         this.data = data;
     }
 
+    public ResponseObject(String message, Object data) {
+        this.message = message;
+        this.data = data;
+    }
 }

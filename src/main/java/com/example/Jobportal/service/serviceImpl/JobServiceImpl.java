@@ -2,6 +2,7 @@ package com.example.Jobportal.service.serviceImpl;
 
 import com.example.Jobportal.common.exceptions.ResourceNotFoundException;
 import com.example.Jobportal.dto.Mapping.JobMapping;
+import com.example.Jobportal.dto.inputDto.JobEditDto;
 import com.example.Jobportal.dto.inputDto.JobInputDto;
 import com.example.Jobportal.dto.outputDto.JobOutputDto;
 import com.example.Jobportal.model.Job;
@@ -43,12 +44,48 @@ public class JobServiceImpl implements JobService {
 
     @Override
     @Transactional
-    public JobOutputDto editJob(Long id, JobInputDto jobInputDto) {
-        Job job = jobRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Not found job id "+id));
-        job = JobMapping.toJob(jobInputDto);
-        job.setId(id);
-        return JobMapping.jobInputToOutput(jobRepository.save(job));
+    public Job editJob(Long id, JobEditDto jobEditDto) {
+        Job jobFromDb = jobRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Not found job id "+id));
+
+        Job jobEdit = new Job();
+        jobEdit.setId(id);
+        jobEdit.setTitle(jobEditDto.getTitle());
+        jobEdit.setCategory(jobFromDb.getCategory());
+        jobEdit.setAmount(jobFromDb.getAmount());
+        jobEdit.setType(jobFromDb.getType());
+        jobEdit.setLevel(jobEditDto.getLevel());
+        jobEdit.setDeadline(jobFromDb.getDeadline());
+        jobEdit.setDescription(jobFromDb.getDescription());
+        jobEdit.setCompanyName(jobFromDb.getCompanyName());
+        jobEdit.setSalary(jobEditDto.getSalary());
+        jobEdit.setLocation(jobEditDto.getLocation());
+        jobEdit.setStatus(jobFromDb.getStatus());
+        jobEdit.setCreateAt(jobFromDb.getCreateAt());
+        jobEdit.setRecruiter(jobFromDb.getRecruiter());
+
+        return jobRepository.save(jobEdit);
     }
+//    public Job editJob(Long id, Job job) {
+//
+//        Job jobFromDB = jobRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Not found job id "+id));
+//        jobFromDB.setTitle(job.getTitle());
+//        jobFromDB.setCategory(job.getCategory());
+//        jobFromDB.setAmount(job.getAmount());
+//        jobFromDB.setType(job.getType());
+//        jobFromDB.setLevel(job.getLevel());
+//        jobFromDB.setDeadline(job.getDeadline());
+//        jobFromDB.setDescription(job.getDescription());
+//        jobFromDB.setCompanyName(job.getCompanyName());
+//        jobFromDB.setSalary(job.getSalary());
+//        jobFromDB.setLocation(job.getLocation());
+//        jobFromDB.setStatus(job.getStatus());
+//        jobFromDB.setCreateAt(job.getCreateAt());
+//        jobFromDB.setRecruiter(job.getRecruiter());
+//        jobFromDB.setId(id);
+//
+//        //return JobMapping.jobInputToOutput(jobRepository.save(job));
+//        return jobRepository.save(jobFromDB);
+//    }
 
     @Override
     public String deleteJob(Long id) {
@@ -64,7 +101,7 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<Job> sortJobByDate(Long id) {
+    public List<JobOutputDto> sortJobByDate(Long id) {
 
         List<JobOutputDto> jobOutputDtos = new ArrayList<>();
 
@@ -72,15 +109,24 @@ public class JobServiceImpl implements JobService {
         if(jobs.isEmpty()){
             new ResourceNotFoundException("No result !");
         }
-//?  jobOutputDtos.add(jobOutputDto);
-//        }
-        //cai cho nay ti bro command Z lai nhe
+        for(Job job : jobs){
+            int applyAmount = applyRepository.countApply(job.getId());
+            JobOutputDto jobOutputDto = JobMapping.jobInputToOutput(job);
+            jobOutputDto.setApplyAmount(applyAmount);
+            jobOutputDtos.add(jobOutputDto);
+        }
 
-        return jobs;
+        return jobOutputDtos;
     }
 
     @Override
-    public Optional<Job> getDetailJob(Long id) {
-        return jobRepository.findById(id);
+    public Job getDetailJob(Long id) {
+        Job job = jobRepository.findById(id).orElseThrow();
+//        JobOutputDto jobOutputDto = JobMapping.jobInputToOutput(job);
+//
+//        int applyAmount = applyRepository.countApply(job.getId());
+//        jobOutputDto.setApplyAmount(applyAmount);
+
+        return job;
     }
 }

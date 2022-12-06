@@ -2,12 +2,12 @@ insert into candidate(name,major,dob,phone,email,address,level,category,avatar,l
 values ('nam','cntt','1999-06-06','012312321','add@gmail.com','HN','senior','backend','https://recmiennam.com/wp-content/uploads/2018/03/hinh-anh-su-tu-1.jpg' ||
  '','jhgh','Nam');
 insert into candidate(name,major,dob,phone,email,address,level,category,avatar,link_cv,gender)
-values ('huy','cntt','2000-06-06','012312321','ahuy@gmail.com','HN','fresher','frontend','adasd','jhgh','Nam');
+values ('huy','cntt','2000-06-06','012312321','ahuy@gmail.com','HN','fresher','frontend','https://recmiennam.com/wp-content/uploads/2018/03/hinh-anh-su-tu-1.jpg','jhgh','Nam');
 insert into candidate(name,major,dob,phone,email,address,level,category,avatar,link_cv,gender)
 values ('bao','cntt','1999-06-06','012312321','bao@gmail.com','HN','fresher','frontend','https://recmiennam.com/wp-content/uploads/2018/03/hinh-anh-su-tu-1.jpg','jhgh','nam');
 
 insert into recruiter(name,dob,address,phone,email,avatar,company_name,username,password)
-values ('Vu Xuan Binh','1999-10-25','HN','2342342342','binh@gmail.com','https://scontent.fhan2-5.fna.fbcdn.net/v/t1.6435-9/163990797_1162047084237289_5680994929546241358_n.jpg','Hybrid','binh','123a');
+values ('Tran Van A','1999-10-25','HN','2342342342','hoang@gmail.com','https://recmiennam.com/wp-content/uploads/2018/03/hinh-anh-su-tu-1.jpg','Hybrid','test','$2a$10$1uH922s3hVjSw.q5QwvRouay4C3Z3kRrPFvkncvmkZIE/MUZigV.S');
 
 insert into job(title,category,amount,type,level,deadline,description,company_name,salary,location,status,create_at,recruiter_id)
 values ('java BE','BE',3,'fulltime','senior','2022-10-10','ada','hybrid',123000,'Hanoi','available','2022-10-05',1);

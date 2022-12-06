@@ -10,6 +10,8 @@ import com.example.Jobportal.service.RecruiterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +25,11 @@ public class RecruiterController{
     @Autowired
     RecruiterRepository recruiterRepository;
 
+
     @PostMapping("/register")
     public ResponseEntity<ResponseObject> register(@RequestBody RegisterDto registerDto){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        registerDto.setPassword(passwordEncoder.encode(registerDto.getPassword()));
         if(recruiterRepository.existsByUsername(registerDto.getUsername())){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Username is already taken !"));
         }else
@@ -32,14 +37,18 @@ public class RecruiterController{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseObject("Email is already taken !"));
         }
         recruiterService.registerRecruiter(registerDto);
-        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Register successfully !"));
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Register successfully !",
+                recruiterService.loadRecruiterByUsername(registerDto.getUsername())));
     }
 
     @PostMapping("/login")
     public ResponseEntity<ResponseObject> login(@RequestBody LoginDto loginDto) {
+
         List<Recruiter> recruiters = recruiterRepository.findAll();
         for (Recruiter recruiter : recruiters) {
-            if (recruiter.getUsername().equalsIgnoreCase(loginDto.getUsername()) && recruiter.getPassword().equalsIgnoreCase(loginDto.getPassword())) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+
+            if (recruiter.getUsername().equalsIgnoreCase(loginDto.getUsername()) && encoder.matches(loginDto.getPassword(), recruiter.getPassword())) {
                 return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Login successfully !",
                         recruiterService.loadRecruiterByUsername(loginDto.getUsername())));
             }

@@ -2,6 +2,7 @@ package com.example.Jobportal.controller;
 
 
 import com.example.Jobportal.common.ResponseObject;
+import com.example.Jobportal.dto.inputDto.JobEditDto;
 import com.example.Jobportal.dto.inputDto.JobInputDto;
 import com.example.Jobportal.dto.outputDto.JobOutputDto;
 import com.example.Jobportal.model.Job;
@@ -31,7 +32,7 @@ public class JobController{
 //
 //    }
     @GetMapping("/jobs/recruiter/{id}")
-    public List<Job> getAllJobsByRecruiterId(@PathVariable Long id){
+    public List<JobOutputDto> getAllJobsByRecruiterId(@PathVariable Long id){
         return jobService.sortJobByDate(id);
 
     }
@@ -49,7 +50,7 @@ public class JobController{
     }
 
     @PutMapping("/jobs/edit/{id}")
-    public ResponseEntity<ResponseObject> editJob(@PathVariable Long id,@RequestBody JobInputDto jobInputDto){
+    public ResponseEntity<ResponseObject> editJob(@PathVariable Long id,@RequestBody JobEditDto jobInputDto){
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseObject("Edit job successfully !",jobService.editJob(id,jobInputDto)));
     }
 
@@ -59,7 +60,7 @@ public class JobController{
     }
 
     @GetMapping("/jobs/{id}")
-    public ResponseEntity<Optional<Job>> getJobById(@PathVariable Long id){
+    public ResponseEntity<Job> getJobById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(jobService.getDetailJob(id));
     }
 

@@ -10,10 +10,10 @@ import java.util.Optional;
 
 public interface JobService {
     Job createJob(JobInputDto jobInputDto);
-    JobOutputDto editJob(Long id, JobInputDto jobInputDto);
+//    Job editJob(Long id, Job job);
+    Job editJob(Long id, JobEditDto jobEditDto);
     String deleteJob(Long id);
     List<JobOutputDto> findJobByCategory(String category);
-    List<Job> sortJobByDate(Long id);
-
-    Optional<Job> getDetailJob(Long id);
+    List<JobOutputDto> sortJobByDate(Long id);
+    Job getDetailJob(Long id);
 }
